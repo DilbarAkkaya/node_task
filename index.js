@@ -2,11 +2,12 @@ const os = require('os');
 const fs = require('fs');
 const cp = require('child_process');
 const rl = require('readline');
-const LINUX = 'unixOS';
+const LINUX = 'linux';
 const WINDOWS = 'windows';
 const LINUX_COMMAND = 'ps -A -o %cpu,%mem,comm | sort -nr | head -n 1';
 const WINDOWS_COMMAND = 'powershell "Get-Process | Sort-Object CPU -Descending | Select-Object -Property Name, CPU, WorkingSet -First 1 | ForEach-Object { $_.Name + \' \' + $_.CPU + \' \' + $_.WorkingSet }"';
 const logFile = 'activityMonitor.log';
+
 //console.log(os.cpus());
 function appendFile(info) {
   const time = Math.floor(Date.now() / 1000);
@@ -41,5 +42,5 @@ const execProcess = (command) => {
     }, 1000)
   });
 }
-execProcess(WINDOWS_COMMAND)
-
+const currentOS = process.platform === LINUX ? LINUX_COMMAND : WINDOWS_COMMAND;
+execProcess(currentOS);
