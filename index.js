@@ -39,7 +39,7 @@ const execProcess = (command) => {
       const mostCPUProcess = cp.execSync(command);
 
       appendFile(mostCPUProcess)
-    }, 1000)
+    }, 60000)
   });
 }
 const currentOS = process.platform === LINUX ? LINUX_COMMAND : WINDOWS_COMMAND;
