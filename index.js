@@ -3,6 +3,10 @@ function c1() {
   console.log('an event occurred!');
 }
 
+function c2() {
+  console.log('yet another event occurred!');
+}
+
 class EventEmitter {
   constructor(){
     this.listeners = {}
@@ -10,11 +14,16 @@ class EventEmitter {
 
  
   addListener(eventName, fn) {
-    console.log(eventName)
+    this.listeners[eventName] = this.listeners[eventName] || []; 
+    this.listeners[eventName].push(fn);
   }
-   /*  
-  on(eventName, fn) {}
- 
+  
+  on(eventName, fn) {
+    this.listeners[eventName] = this.listeners[eventName] || []; 
+    this.listeners[eventName].push(fn); 
+  }
+
+ /*
   removeListener(eventName, fn) {}
     
   off(eventName, fn) {}
@@ -28,4 +37,6 @@ class EventEmitter {
   rawListeners(eventName) {} */
  }
  const myEmitter = new EventEmitter();
- myEmitter.addListener('hi', c1)
+ myEmitter.addListener('eventOne', c1);
+ myEmitter.on('eventOne', c2);
+
