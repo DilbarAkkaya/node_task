@@ -13,7 +13,7 @@ readStream.on('data', async (partsOfData) => {
     for (const item of jsonArray) {
       result.push(item);
     }
-    writeStream.write(JSON.stringify(result));
+    writeStream.write((result.map(item => JSON.stringify(item)).join('\n')));
     allData = '';
   } catch (err) {
     console.log('error', err);
